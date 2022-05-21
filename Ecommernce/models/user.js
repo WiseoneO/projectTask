@@ -30,8 +30,9 @@ const userSchema = new mongoose.Schema({
     password : {
         type : String,
         required : [true, "Please enter password for your account"],
-        minlength : [6, "Your password must be at least 6 character long"],
+        isLength : { errorMessage :"Your password must be at least 6 character long", options: { min: 6 }},
         // maxlength : [10, "Your password must be at least 10 character long"]
+        
 
     },
 
