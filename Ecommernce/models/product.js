@@ -1,11 +1,10 @@
-const { date } = require("joi");
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
     name : {
-                type: String,
-                maxlength: [20, "product name cannot exceed 20 characters."],
-                required : [true, "Please enter the product name."]
+            type: String,
+            maxlength: [20, "product name cannot exceed 20 characters."],
+            required : [true, "Please enter the product name."]
         },
 
     price: {
@@ -27,15 +26,10 @@ const productSchema = new mongoose.Schema({
     size : {
         type: String,
     },
-    cratedAt : {
+    createdAt : {
         type: Date,
         default : Date.now
     }
-    // userId: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'User',
-    //     required: true
-    //     }
 });
 
 

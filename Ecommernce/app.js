@@ -3,8 +3,6 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/database");
 // setting config.env files variables
 dotenv.config({path : "./config/config.env"})
-const validator = require("validator")
-console.log(validator);
 
 connectDB();
 
@@ -13,10 +11,12 @@ const app = express();
 app.use(express.json());
 
 // importing routes
-const productRoute = require("./routes/productRoute");
+const shopRoute = require("./routes/shopRoute");
+const userRoute = require("./routes/userRoute");
 
 
-app.use("/api/v1/admin", productRoute)
+app.use("/api/v1", shopRoute);
+app.use("/api/v1", userRoute);
 
 
 

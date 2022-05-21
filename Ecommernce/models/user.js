@@ -4,18 +4,16 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
     firstName : {
         type: String,
-        trim : true,
         maxlength: [20, "cannot exceed 20 characters"],
         required : [true, "Please enter your first name"]
     },
     lastName : {
         type: String,
-        trim : true,
         maxlength: [20, "cannot exceed 20 characters"],
         required : [true, "Please enter your last name"]
     },
 
-    StoreName: {
+    storeName: {
         type :String,
         maxlength: [30, "cannot exceed 30 characters"],
         required : [true, "Please enter your Your store name"]  
@@ -28,12 +26,13 @@ const userSchema = new mongoose.Schema({
         unique : true,
         validate : [validator.isEmail, "Please enter a valid email address"]
     },
-
+    
     password : {
         type : String,
         required : [true, "Please enter password for your account"],
-        minlength : [6, "Your password must be at least 8 character long"],
-        select : false,
+        maxlength : [10, "Your password must be at least 10 character long"],
+        minlength : [6, "Your password must be at least 6 character long"]
+
     },
 
     phoneNumber : {
@@ -41,7 +40,7 @@ const userSchema = new mongoose.Schema({
         required : [true, 'Please enter your phone number'],
         unique: true
     },
-    cratedAt : {
+    createdAt : {
         type: Date,
         default : Date.now
     }
