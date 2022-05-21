@@ -110,6 +110,31 @@ exports.getAllUser = async(req, res, next)=>{
     
 }
 
+// Find a single user
+exports.singleUser = async (req, res , next)=>{
+    try{
+        const user = await Users.findOne({_id : req.params.id});
+        if(!user){
+            return res.status(400).json({
+                success : false,
+                message : "No user found!"
+            })
+        }
+
+        res.status(200).json({
+            success : true,
+            message : "User found",
+            data : user
+        })
+    }catch(errors){
+        res.status(400).json({
+            success : false,
+            message : errors.message
+        })
+    }
+    
+}
+
 // Delete User =>/api/v1/:id
 
 exports.deleteOne = async(req, res, next)=>{
@@ -143,22 +168,19 @@ exports.deleteOne = async(req, res, next)=>{
 // Update a user
 exports.editUser = async(req, res, next)=>{
     const id = req.params.id;
-    let {firstName, lastName, storeName, email, phoneNumber, password} = req.body;
-
-    
+    let payload = req.body;
 
     try{
-        let hashedPassword = await bcrypt.hash(password, 12);
-        password = hashedPassword;
+        let hashedPassword = await bcrypt.hash(payload.password, 12);
+        payload.password = hashedPassword;
 
-        const user = await Users.findByIdAndUpdate({_id:id},{ firstName, lastName, storeName, email, phoneNumber, password}, {new :true});
-
+        const user = await Users.findByIdAndUpdate({_id:id},payload, {new :true});
 
         if(!user){
             return res.status(400).json({
                 success : false,
                 message : "No user found!"
-            })
+            });
         }
 
         const updatedUser = await user.save();
