@@ -31,12 +31,13 @@ const userSchema = new mongoose.Schema({
     password : {
         type : String,
         required : [true, "Please enter password for your account"],
+        isAlphanumericLocales: [
+            'en-US',       'az-AZ', 'bg-BG', 'cs-CZ',]
     },
 
     phoneNumber : {
         type : Number,
         required : [true, 'Please enter your phone number'],
-        unique: true,
     },
     createdAt : {
         type: Date,

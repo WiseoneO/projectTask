@@ -9,6 +9,7 @@ exports.createUser = async (req, res,next)=>{
     let {firstName, lastName, storeName, email, phoneNumber, password} = req.body;
 
     try{
+        
         // check if email exist
         const user = await Users.findOne({email : email});
         if(user){
@@ -183,7 +184,7 @@ exports.editUser = async(req, res, next)=>{
         }
 
         const updatedUser = await user.save();
-    
+
         res.status(201).json({
             success : true,
             message : "User profile updated successfully",

@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/database");
 // setting config.env files variables
 dotenv.config({path: "./config.env"});
-
+const validator = require("validator");
 
 connectDB();
 
