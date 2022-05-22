@@ -2,9 +2,7 @@ const Users = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const { findByIdAndDelete } = require("../models/user");
 dotenv.config({path : "./config/config.env"})
-
 
 // create new user => /api/v1/register
 exports.createUser = async (req, res,next)=>{
@@ -20,6 +18,14 @@ exports.createUser = async (req, res,next)=>{
             });
         }
 
+        // checking the length of the password entered by users
+        if(password.length < 6){
+            return res.status(400).json({
+                success : false,
+                message : "Password must be atleast 6 characters long"
+            })
+        }
+        
         // hash the Password
         let hashedPassword = await bcrypt.hash(password, 12);
         // reassign the password
@@ -32,16 +38,13 @@ exports.createUser = async (req, res,next)=>{
             success : true,
             message : "User created successfully",
             data : createdUser
-
         })
     }catch(errors){
         res.status(400).json({
             success : false,
             message : errors.message
         })
-        // console.log(errors)
     }
-    
 }
 
 // Sign users in =>/api/v1/login
@@ -107,7 +110,6 @@ exports.getAllUser = async(req, res, next)=>{
             message : errors.message
         })
     }
-    
 }
 
 // Find a single user
@@ -132,11 +134,9 @@ exports.singleUser = async (req, res , next)=>{
             message : errors.message
         })
     }
-    
 }
 
 // Delete User =>/api/v1/:id
-
 exports.deleteOne = async(req, res, next)=>{
     const id = req.params.id;
     const user = await Users.findOne({_id : id});
@@ -162,7 +162,6 @@ exports.deleteOne = async(req, res, next)=>{
             message : errors.message
         })
     }
-    
 }
 
 // Update a user
@@ -196,6 +195,4 @@ exports.editUser = async(req, res, next)=>{
             message : errors.message
         })
     }
-   
-
 }

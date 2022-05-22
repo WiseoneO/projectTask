@@ -1,5 +1,6 @@
-const validator = require("validator");
 const mongoose = require("mongoose");
+const validator = require("validator");
+
 
 const userSchema = new mongoose.Schema({
     firstName : {
@@ -30,16 +31,12 @@ const userSchema = new mongoose.Schema({
     password : {
         type : String,
         required : [true, "Please enter password for your account"],
-        isLength : { errorMessage :"Your password must be at least 6 character long", options: { min: 6 }},
-        // maxlength : [10, "Your password must be at least 10 character long"]
-        
-
     },
 
     phoneNumber : {
         type : Number,
         required : [true, 'Please enter your phone number'],
-        unique: true
+        unique: true,
     },
     createdAt : {
         type: Date,
